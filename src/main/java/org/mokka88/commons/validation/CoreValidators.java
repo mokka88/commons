@@ -1,8 +1,8 @@
 package org.mokka88.commons.validation;
 
-public class Validators {
+public class CoreValidators {
     // No need for an instance
-    private Validators() {}
+    private CoreValidators() {}
 
     public static <T> Validator<T> notEmpty(T value) {
         return new NotEmptyValidator<T>().withValue(value);
@@ -22,5 +22,17 @@ public class Validators {
 
     public static Validator<String> matchesRegex(String value, String regex) {
         return new LambdaValidator<String>(v -> v.matches(regex)).withValue(value);
+    }
+
+    public static Validator<String> hasLength(String value, int length) {
+        return new LambdaValidator<String>(v -> v.length() == length).withValue(value);
+    }
+
+    public static Validator<String> minLength(String value, int length) {
+        return new LambdaValidator<String>(v -> v.length() >= length).withValue(value);
+    }
+
+    public static Validator<String> maxLength(String value, int length) {
+        return new LambdaValidator<String>(v -> v.length() <= length).withValue(value);
     }
 }

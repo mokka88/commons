@@ -5,13 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mokka88.commons.validation.ValidationResult.Status.ERROR;
 import static org.mokka88.commons.validation.ValidationResult.Status.OK;
-import static org.mokka88.commons.validation.Validators.*;
+import static org.mokka88.commons.validation.CoreValidators.*;
 
 class ValidatorGroupTest {
     public static final String EMAIL_PATTERN = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
@@ -38,9 +36,12 @@ class ValidatorGroupTest {
 
     private Validator createValidatorGroup(InputData inputData) {
         return new ValidatorGroup() //
-                .withValidator(notEmpty(inputData.getName()).withErrorMessage(NAME_EMPTY)) //
-                .withValidator(matchesRegex(inputData.getEmail(), EMAIL_PATTERN).withErrorMessage(EMAIL_INVALID)) //
-                .withValidator(lesserThan(inputData.getDateOfBirth(), LocalDate.now().minusYears(18)).withErrorMessage(TOO_YOUNG));
+                .withValidator(notEmpty(inputData.getName()) //
+                        .withErrorMessage(NAME_EMPTY)) //
+                .withValidator(matchesRegex(inputData.getEmail(), EMAIL_PATTERN) //
+                        .withErrorMessage(EMAIL_INVALID)) //
+                .withValidator(lesserThan(inputData.getDateOfBirth(), LocalDate.now().minusYears(18)) //
+                        .withErrorMessage(TOO_YOUNG));
     }
 
     @Test
@@ -53,14 +54,27 @@ class ValidatorGroupTest {
     @Test
     void testInValid() {
         ValidationResult result = createValidatorGroup(invalidInput).validate();
+
+        assertInvalidResult(result);
+    }
+
+    private void assertInvalidResult(ValidationResult result) {
         assertEquals(ERROR, result.getStatus());
 
         List<ValidationResult.Message> flatResults = result.getFlatResults();
         assertEquals(3, flatResults.size());
 
-        Set<String> messages = flatResults.stream().map(r -> r.getText()).collect(Collectors.toSet());
+        List<String> messages = result.getMessages();
         assertTrue(messages.contains(NAME_EMPTY));
         assertTrue(messages.contains(EMAIL_INVALID));
         assertTrue(messages.contains(TOO_YOUNG));
+    }
+
+    @Test
+    void testException() throws ValidationException {
+         ValidationException exception = assertThrows(ValidationException.class, () -> createValidatorGroup(invalidInput).validateAndThrow());
+         ValidationResult result = exception.getResult();
+
+         assertInvalidResult(result);
     }
 }

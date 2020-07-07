@@ -42,6 +42,10 @@ public class ValidationResult {
         messages.forEach(m -> add(m.status, name, m.text));
     }
 
+    public List<String> getMessages() {
+        return getFlatResults().stream().map(r -> r.getText()).collect(Collectors.toList());
+    }
+
     public enum Status {
         OK,
         WARNING,

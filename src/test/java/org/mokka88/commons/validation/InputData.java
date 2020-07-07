@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Builder
 @Getter
-class InputData {
+public class InputData {
     private String name;
     private String email;
     private LocalDate dateOfBirth;

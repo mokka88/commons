@@ -1,6 +1,6 @@
 package org.mokka88.commons.validation;
 
-public class NotEmptyValidator<T> extends AbstractValidator<T> {
+class NotEmptyValidator<T> extends AbstractValidator<T> {
 
     public NotEmptyValidator() {
         super();
