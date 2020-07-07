@@ -1,10 +1,12 @@
 package org.mokka88.commons.validation;
 
+import java.util.Collection;
+
 import static org.mokka88.commons.validation.ValidationResult.Status.OK;
 
 public abstract class AbstractValidator<T> implements Validator<T> {
     protected final ValidationResult result;
-    protected boolean skipEmptyValues = true;
+    protected boolean skipIfEmpty = true;
 
     protected T value = null;
     protected String componentName = null;
@@ -30,7 +32,7 @@ public abstract class AbstractValidator<T> implements Validator<T> {
     }
 
     public ValidationResult validate() {
-        if (skipEmptyValues && isEmpty(value)) {
+        if (skipIfEmpty && isEmpty()) {
             return result;
         }
 
@@ -59,12 +61,14 @@ public abstract class AbstractValidator<T> implements Validator<T> {
         return errorName;
     }
 
-    protected boolean isEmpty(final T value) {
-        return value == null || ((value instanceof String) && ((String) value).isEmpty());
+    protected boolean isEmpty() {
+        return value == null //
+                || ((value instanceof String) && ((String) value).isEmpty()) //
+                || ((value instanceof Collection) && ((Collection) value).isEmpty());
     }
 
-    public Validator<T> withErrorName(String errorName) {
-        this.errorName = errorName;
+    public Validator<T> withErrorMessage(String message) {
+        this.errorName = message;
 
         return this;
     }

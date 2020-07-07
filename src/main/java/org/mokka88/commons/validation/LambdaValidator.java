@@ -6,6 +6,7 @@ public class LambdaValidator<T> extends AbstractValidator<T> {
     private final Predicate<T> predicate;
 
     public LambdaValidator(Predicate<T> predicate) {
+        super();
         this.predicate = predicate;
     }
 

@@ -5,5 +5,5 @@ public interface Validator<T> {
     Validator<T> withValue(T value);
     ValidationResult validate();
     void validateAndThrow() throws ValidationException;
-    Validator<T> withErrorName(String errorName);
+    Validator<T> withErrorMessage(String message);
 }

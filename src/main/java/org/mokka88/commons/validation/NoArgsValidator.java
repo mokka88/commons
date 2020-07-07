@@ -4,6 +4,8 @@ public class NoArgsValidator extends AbstractValidator {
     private final NoArgs noArgs;
 
     public NoArgsValidator(NoArgs noArgs) {
+        super();
+        skipIfEmpty = false;
         this.noArgs = noArgs;
     }
 
