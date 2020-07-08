@@ -47,4 +47,11 @@ public interface Validator<T> {
      * @return
      */
     Validator<T> withErrorMessage(String message);
+
+    /**
+     * Delivers the exact opposite result of it's normal functionality
+     *
+     * @return
+     */
+    Validator<T> negate();
 }

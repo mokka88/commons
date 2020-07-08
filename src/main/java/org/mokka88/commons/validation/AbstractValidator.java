@@ -18,6 +18,7 @@ public abstract class AbstractValidator<T> implements Validator<T> {
     protected T value = null;
     protected String componentName = null;
     protected String errorName = null;
+    protected boolean negate = false;
 
     public AbstractValidator() {
         result = new ValidationResult();
@@ -43,7 +44,7 @@ public abstract class AbstractValidator<T> implements Validator<T> {
             return result;
         }
 
-        if (!doValidation()) {
+        if (!negate ^ doValidation()) {
             result.addError(componentName, errorName);
         }
 
@@ -76,6 +77,13 @@ public abstract class AbstractValidator<T> implements Validator<T> {
 
     public Validator<T> withErrorMessage(String message) {
         this.errorName = message;
+
+        return this;
+    }
+
+    @Override
+    public Validator<T> negate() {
+        negate = !negate;
 
         return this;
     }

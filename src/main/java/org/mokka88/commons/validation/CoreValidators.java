@@ -1,5 +1,7 @@
 package org.mokka88.commons.validation;
 
+import java.math.BigDecimal;
+
 /**
  * A factory for creating basic validators
  *
@@ -36,5 +38,13 @@ public interface CoreValidators {
 
     static Validator<String> maxLength(String value, int length) {
         return new LambdaValidator<String>(v -> v.length() <= length).withValue(value);
+    }
+
+    static Validator not(Validator validator) {
+        return validator.negate();
+    }
+
+    static Validator<BigDecimal> wholeNumber(BigDecimal value) {
+        return new LambdaValidator<BigDecimal>(v -> v.signum() == 0 || v.scale() <= 0 || v.stripTrailingZeros().scale() <= 0).withValue(value);
     }
 }

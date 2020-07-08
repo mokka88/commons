@@ -2,6 +2,8 @@ package org.mokka88.commons.validation;
 
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.mokka88.commons.validation.TestUtil.assertInvalid;
 import static org.mokka88.commons.validation.TestUtil.assertValid;
 
@@ -101,5 +103,30 @@ class CoreValidatorsTest {
     @Test
     void testMaxLengthFalse() {
         assertInvalid(CoreValidators.maxLength("eee", 2));
+    }
+
+    @Test
+    void testNegateTrue() {
+        assertValid(CoreValidators.not(CoreValidators.greaterThan(2, 2)));
+        assertValid(CoreValidators.not(CoreValidators.greaterThan(1, 2)));
+    }
+
+    @Test
+    void testNegateFalse() {
+        assertInvalid(CoreValidators.not(CoreValidators.greaterThan(3, 2)));
+        assertInvalid(CoreValidators.not(CoreValidators.notEmpty("e")));
+    }
+
+    @Test
+    void testWholeNumberTrue() {
+        assertValid(CoreValidators.wholeNumber(BigDecimal.ZERO));
+        assertValid(CoreValidators.wholeNumber(BigDecimal.ONE));
+        assertValid(CoreValidators.wholeNumber(BigDecimal.TEN));
+    }
+
+    @Test
+    void testWholeNumberFalse() {
+        assertInvalid(CoreValidators.wholeNumber(BigDecimal.valueOf(2.22)));
+        assertInvalid(CoreValidators.wholeNumber(BigDecimal.valueOf(Math.E)));
     }
 }
