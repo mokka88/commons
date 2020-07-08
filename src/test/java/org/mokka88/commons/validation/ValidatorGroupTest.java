@@ -61,10 +61,10 @@ class ValidatorGroupTest {
     private void assertInvalidResult(ValidationResult result) {
         assertEquals(ERROR, result.getStatus());
 
-        List<ValidationResult.Message> flatResults = result.getFlatResults();
+        List<ValidationResult.Message> flatResults = result.getMessages();
         assertEquals(3, flatResults.size());
 
-        List<String> messages = result.getMessages();
+        List<String> messages = result.getMessageTexts();
         assertTrue(messages.contains(NAME_EMPTY));
         assertTrue(messages.contains(EMAIL_INVALID));
         assertTrue(messages.contains(TOO_YOUNG));

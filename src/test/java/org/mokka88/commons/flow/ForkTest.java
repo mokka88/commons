@@ -38,21 +38,21 @@ class ForkTest {
     class GreetInEnglish extends AbstractLinearFlowComponent<TestData> {
         @Override
         protected void businessLogic() {
-            data.greeting = GREET_ENGLISH;
+            context.greeting = GREET_ENGLISH;
         }
     }
 
     class GreetInGerman extends AbstractLinearFlowComponent<TestData> {
         @Override
         protected void businessLogic() {
-            data.greeting = GREET_GERMAN;
+            context.greeting = GREET_GERMAN;
         }
     }
 
     class GreetInHungarian extends AbstractLinearFlowComponent<TestData> {
         @Override
         protected void businessLogic() {
-            data.greeting = GREET_HUNGARIAN;
+            context.greeting = GREET_HUNGARIAN;
         }
     }
 }

@@ -20,7 +20,7 @@ public class ValidationResult {
      *
      * @return
      */
-    public List<Message> getFlatResults() {
+    public List<Message> getMessages() {
         return results.entrySet().stream() //
                 .map(Map.Entry::getValue) //
                 .flatMap(Collection::stream) //
@@ -32,8 +32,8 @@ public class ValidationResult {
             this.status = status;
         }
 
-        results.putIfAbsent(componentName, new ArrayList<>());
-        results.get(componentName).add(new Message(status, message));
+        results.computeIfAbsent(componentName, v -> new ArrayList<>()) //
+                .add(new Message(status, message));
     }
 
     public void addError(String componentName, String message) {
@@ -57,8 +57,8 @@ public class ValidationResult {
      *
      * @return
      */
-    public List<String> getMessages() {
-        return getFlatResults().stream().map(r -> r.getText()).collect(Collectors.toList());
+    public List<String> getMessageTexts() {
+        return getMessages().stream().map(r -> r.getText()).collect(Collectors.toList());
     }
 
     public Map<String, List<Message>> getEverything() {

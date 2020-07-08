@@ -1,7 +1,6 @@
 package org.mokka88.commons.flow;
 
 /**
- * This is an improved State Design Pattern.
  * It's meant for representing business workflows in an elegant manner.
  * The next/fork methods are defined in the subinterfaces: {@link LinearFlowComponent} and {@link ForkFlowComponent}.
  * @param <T>
@@ -10,18 +9,18 @@ public interface FlowComponent<T> {
     /**
      * Starts execution of the whole flow chain from the beginning.
      *
-     * @param data
+     * @param context
      */
-    default void begin(T data) {
-        first().executeCurrent(data);
+    default void begin(T context) {
+        first().executeCurrent(context);
     }
 
     /**
      * Executes current flow component
      *
-     * @param data
+     * @param context
      */
-    void executeCurrent(T data);
+    void executeCurrent(T context);
 
     /**
      * Retrieves first flow component in the chain

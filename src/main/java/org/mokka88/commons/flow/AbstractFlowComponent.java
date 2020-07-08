@@ -9,12 +9,12 @@ package org.mokka88.commons.flow;
  * @param <T>
  */
 public abstract class AbstractFlowComponent<T> implements FlowComponent<T> {
-    protected T data;
+    protected T context;
     private FlowComponent<T> prev;
 
     @Override
-    public void executeCurrent(T data) {
-        this.data = data;
+    public void executeCurrent(T context) {
+        this.context = context;
 
         businessLogic();
 
@@ -25,7 +25,7 @@ public abstract class AbstractFlowComponent<T> implements FlowComponent<T> {
         FlowComponent<T> next = nextFlowComponent();
 
         if (next != null) {
-            next.executeCurrent(data);
+            next.executeCurrent(context);
         }
     }
 

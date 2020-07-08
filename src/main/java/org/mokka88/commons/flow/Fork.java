@@ -27,7 +27,7 @@ public class Fork<T> extends AbstractFlowComponent<T> implements ForkFlowCompone
 
     @Override
     protected FlowComponent<T> nextFlowComponent() {
-        return componentMap.get(forkMapping.apply(data));
+        return componentMap.get(forkMapping.apply(context));
     }
 
     @Override
