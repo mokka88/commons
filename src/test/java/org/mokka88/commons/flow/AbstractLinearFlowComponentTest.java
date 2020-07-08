@@ -25,14 +25,14 @@ class AbstractLinearFlowComponentTest {
 
     class First extends AbstractLinearFlowComponent<TestData> {
         @Override
-        protected void implementation() {
+        protected void businessLogic() {
             data.first++;
         }
     }
 
     class Second extends AbstractLinearFlowComponent<TestData> {
         @Override
-        protected void implementation() {
+        protected void businessLogic() {
             data.second = data.first + 1;
         }
     }

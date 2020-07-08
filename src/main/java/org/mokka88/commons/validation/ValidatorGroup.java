@@ -6,6 +6,12 @@ import java.util.function.Predicate;
 
 import static org.mokka88.commons.validation.ValidationResult.Status.ERROR;
 
+/**
+ * Using the builder pattern for grouping together validators and aggregating results.
+ *
+ * @param <T>
+ * @author mokka88
+ */
 public class ValidatorGroup<T> extends AbstractValidator<T> {
     private final List<Validator> componentList = new ArrayList<>();
 
@@ -14,7 +20,7 @@ public class ValidatorGroup<T> extends AbstractValidator<T> {
     public ValidatorGroup() {
         super();
     }
-    
+
     @Override
     protected final boolean doValidation() {
         initOtherValidators();
@@ -41,13 +47,6 @@ public class ValidatorGroup<T> extends AbstractValidator<T> {
         // This can be overridden is subclasses if needed
     }
 
-    /**
-     * With validator.
-     *
-     * @param validator
-     *            the validator
-     * @return the aggregate validator
-     */
     public ValidatorGroup<T> withValidator(Validator validator) {
         componentList.add(validator);
 
@@ -62,7 +61,14 @@ public class ValidatorGroup<T> extends AbstractValidator<T> {
         return withValidator(new NoArgsValidator(noArgs));
     }
 
-                                           @Override
+    /**
+     * Overrides values to be validated in the validators with a single component name-value pair
+     *
+     * @param componentName
+     * @param value
+     * @return
+     */
+    @Override
     public ValidatorGroup withField(String componentName, T value) {
         super.withField(componentName, value);
 
@@ -71,6 +77,12 @@ public class ValidatorGroup<T> extends AbstractValidator<T> {
         return this;
     }
 
+    /**
+     * Overrides values to be validated in the validators with a single value
+     *
+     * @param value
+     * @return
+     */
     public ValidatorGroup<T> withValue(T value) {
         withField(null, value);
 

@@ -4,8 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * Default implementation of {@link ForkFlowComponent}
+ *
+ * @author mokka88
+ * @param <T>
+ */
 public class Fork<T> extends AbstractFlowComponent<T> implements ForkFlowComponent<T> {
-    protected final Map<Object, FlowComponent<T>> nextFlows = new HashMap<>();
+    protected final Map<Object, FlowComponent<T>> componentMap = new HashMap<>();
     protected final Function<T, Object> forkMapping;
 
     public Fork(Function<T, Object> forkMapping) {
@@ -14,18 +20,18 @@ public class Fork<T> extends AbstractFlowComponent<T> implements ForkFlowCompone
 
     public ForkFlowComponent<T> fork(Object key, FlowComponent<T> flow) {
         flow.setPrev(this);
-        nextFlows.put(key, flow);
+        componentMap.put(key, flow);
 
         return this;
     }
 
     @Override
     protected FlowComponent<T> nextFlowComponent() {
-        return nextFlows.get(forkMapping.apply(data));
+        return componentMap.get(forkMapping.apply(data));
     }
 
     @Override
-    protected void implementation() {
+    protected void businessLogic() {
         // Most probably not needed in a fork
     }
 }

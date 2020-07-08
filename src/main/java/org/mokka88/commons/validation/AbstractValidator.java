@@ -4,6 +4,13 @@ import java.util.Collection;
 
 import static org.mokka88.commons.validation.ValidationResult.Status.OK;
 
+/**
+ * Default, abstract implementation of {@link Validator}
+ * The validation logic itself needs to be implemented in a subclass
+ *
+ * @author mokka88
+ * @param <T>
+ */
 public abstract class AbstractValidator<T> implements Validator<T> {
     protected final ValidationResult result;
     protected boolean skipIfEmpty = true;

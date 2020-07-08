@@ -16,10 +16,10 @@ class ForkTest {
         data.language = Language.HUNGARIAN;
 
         new Fork<TestData>(d -> d.language) //
-        .fork(Language.GERMAN, new GreetInGerman()) //
-        .fork(Language.ENGLISH, new GreetInEnglish()) //
-        .fork(Language.HUNGARIAN, new GreetInHungarian()) //
-        .begin(data);
+                .fork(Language.GERMAN, new GreetInGerman()) //
+                .fork(Language.HUNGARIAN, new GreetInHungarian()) //
+                .fork(Language.ENGLISH, new GreetInEnglish()) //
+                .begin(data);
 
         assertEquals(GREET_HUNGARIAN, data.greeting);
     }
@@ -37,21 +37,21 @@ class ForkTest {
 
     class GreetInEnglish extends AbstractLinearFlowComponent<TestData> {
         @Override
-        protected void implementation() {
+        protected void businessLogic() {
             data.greeting = GREET_ENGLISH;
         }
     }
 
     class GreetInGerman extends AbstractLinearFlowComponent<TestData> {
         @Override
-        protected void implementation() {
+        protected void businessLogic() {
             data.greeting = GREET_GERMAN;
         }
     }
 
     class GreetInHungarian extends AbstractLinearFlowComponent<TestData> {
         @Override
-        protected void implementation() {
+        protected void businessLogic() {
             data.greeting = GREET_HUNGARIAN;
         }
     }

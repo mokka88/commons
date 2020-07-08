@@ -1,5 +1,10 @@
 package org.mokka88.commons.validation;
 
+/**
+ * A factory for creating basic validators
+ *
+ * @author mokka88
+ */
 public class CoreValidators {
     // No need for an instance
     private CoreValidators() {}

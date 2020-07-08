@@ -1,5 +1,13 @@
 package org.mokka88.commons.flow;
 
+/**
+ * Default, abstract implementation of {@link FlowComponent}
+ * Please do not extend this class, unless the flow framework needs to be extended.
+ * For regular use, please extend one of it's subclasses.
+ *
+ * @author mokka88
+ * @param <T>
+ */
 public abstract class AbstractFlowComponent<T> implements FlowComponent<T> {
     protected T data;
     private FlowComponent<T> prev;
@@ -8,7 +16,7 @@ public abstract class AbstractFlowComponent<T> implements FlowComponent<T> {
     public void executeCurrent(T data) {
         this.data = data;
 
-        implementation();
+        businessLogic();
 
         executeNext();
     }
@@ -23,7 +31,7 @@ public abstract class AbstractFlowComponent<T> implements FlowComponent<T> {
 
     protected abstract FlowComponent<T> nextFlowComponent();
 
-    protected abstract void implementation();
+    protected abstract void businessLogic();
 
     @Override
     public void setPrev(final FlowComponent<T> prev) {

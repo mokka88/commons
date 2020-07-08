@@ -5,11 +5,21 @@ import lombok.Getter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Data object containing all relevant information regarding the validation results
+ *
+ * @author mokka88
+ */
 @Getter
 public class ValidationResult {
     private Status status = Status.OK;
     private Map<String, List<Message>> results = new HashMap<>();
 
+    /**
+     * Get results without component names (just status and error messages)
+     *
+     * @return
+     */
     public List<Message> getFlatResults() {
         return results.entrySet().stream() //
                 .map(Map.Entry::getValue) //
@@ -42,8 +52,17 @@ public class ValidationResult {
         messages.forEach(m -> add(m.status, name, m.text));
     }
 
+    /**
+     * Get only error message (no status or component names)
+     *
+     * @return
+     */
     public List<String> getMessages() {
         return getFlatResults().stream().map(r -> r.getText()).collect(Collectors.toList());
+    }
+
+    public Map<String, List<Message>> getEverything() {
+        return results;
     }
 
     public enum Status {

@@ -1,5 +1,10 @@
 package org.mokka88.commons.validation;
 
+/**
+ * Validator for arbitrary lambda expressions
+ *
+ * @author mokka88
+ */
 public class NoArgsValidator extends AbstractValidator {
     private final NoArgs noArgs;
 
