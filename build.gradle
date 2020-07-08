@@ -11,6 +11,9 @@ plugins {
     id 'java-library'
 }
 
+group = 'org.mokka88'
+version = '0.0.1-SNAPSHOT'
+
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
