@@ -8,7 +8,7 @@ import lombok.Getter;
  * @author mokka88
  */
 @Getter
-public class ValidationException extends Exception {
+public class ValidationException extends RuntimeException {
     private final ValidationResult result;
 
     public ValidationException(ValidationResult result) {

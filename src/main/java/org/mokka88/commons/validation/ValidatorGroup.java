@@ -57,8 +57,16 @@ public class ValidatorGroup<T> extends AbstractValidator<T> {
         return withValidator(new LambdaValidator(predicate));
     }
 
+    public ValidatorGroup<T> withValidator(Predicate predicate, String errorMessage) {
+        return withValidator(new LambdaValidator(predicate).withErrorMessage(errorMessage));
+    }
+
     public ValidatorGroup<T> withValidator(NoArgs noArgs) {
         return withValidator(new NoArgsValidator(noArgs));
+    }
+
+    public ValidatorGroup<T> withValidator(NoArgs noArgs, String errorMessage) {
+        return withValidator(new NoArgsValidator(noArgs).withErrorMessage(errorMessage));
     }
 
     /**
