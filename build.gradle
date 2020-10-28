@@ -49,7 +49,7 @@ test {
 publishing {
   publications {
         maven(MavenPublication) {
-            groupId = 'org.mokka88'
+            groupId = 'io.github.mokka88'
             artifactId = 'commons'
             version = '1.0.1'
 
