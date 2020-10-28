@@ -9,10 +9,11 @@
 plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
+    id 'maven-publish'
 }
 
-group = 'org.mokka88'
-version = '0.0.1-SNAPSHOT'
+group = ' io.github.mokka88'
+version = '1.0.1-SNAPSHOT'
 
 repositories {
     // Use jcenter for resolving dependencies.
@@ -43,4 +44,27 @@ dependencies {
 test {
     // Use junit platform for unit tests
     useJUnitPlatform()
+}
+
+publishing {
+  publications {
+        maven(MavenPublication) {
+            groupId = 'org.mokka88'
+            artifactId = 'commons'
+            version = '1.0.1'
+
+            from components.java
+        }
+    }
+
+  repositories {
+    maven {
+      name = "OSSRH"
+      url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+      credentials {
+        username = System.getenv("MAVEN_USERNAME")
+        password = System.getenv("MAVEN_PASSWORD")
+      }
+    }
+  }
 }
