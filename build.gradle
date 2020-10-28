@@ -13,7 +13,7 @@ plugins {
 }
 
 group = ' io.github.mokka88'
-version = '1.0.1-SNAPSHOT'
+version = '0.0.1-SNAPSHOT'
 
 repositories {
     // Use jcenter for resolving dependencies.
@@ -51,7 +51,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'io.github.mokka88'
             artifactId = 'commons'
-            version = '1.0.1'
+            version = '1.0.0'
 
             from components.java
         }
