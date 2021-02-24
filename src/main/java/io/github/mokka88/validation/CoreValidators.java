@@ -16,8 +16,16 @@ public interface CoreValidators {
         return new LambdaValidator<T>(v -> v.compareTo(reference) > 0).withValue(value);
     }
 
+    static <T extends Comparable> Validator<T> greaterOrEquals(T value, T reference) {
+        return new LambdaValidator<T>(v -> v.compareTo(reference) >= 0).withValue(value);
+    }
+
     static <T extends Comparable> Validator<T> lesserThan(T value, T reference) {
         return new LambdaValidator<T>(v -> v.compareTo(reference) < 0).withValue(value);
+    }
+
+    static <T extends Comparable> Validator<T> lessOrEquals(T value, T reference) {
+        return new LambdaValidator<T>(v -> v.compareTo(reference) <= 0).withValue(value);
     }
 
     static <T> Validator<T> equalsTo(T value, T reference) {
@@ -46,5 +54,9 @@ public interface CoreValidators {
 
     static Validator<BigDecimal> wholeNumber(BigDecimal value) {
         return new LambdaValidator<BigDecimal>(v -> v.signum() == 0 || v.scale() <= 0 || v.stripTrailingZeros().scale() <= 0).withValue(value);
+    }
+
+    static Validator fail() {
+        return new NoArgsValidator(() -> false);
     }
 }

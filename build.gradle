@@ -6,14 +6,57 @@
  * User Manual available at https://docs.gradle.org/6.5.1/userguide/java_library_plugin.html
  */
 
-plugins {
-    // Apply the java-library plugin to add support for Java Library
-    id 'java-library'
-    id 'maven-publish'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+    }
 }
 
-group = ' io.github.mokka88'
+
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'io.codearte.nexus-staging' version '0.22.0'
+}
+
+apply plugin: 'com.bmuschko.nexus'
+
+group = 'io.github.mokka88'
 version = '1.0.3-SNAPSHOT'
+
+modifyPom {
+    project {
+        name 'commons'
+        description 'Some common libraries'
+        url 'https://github.com/mokka88/commons'
+        inceptionYear '2020'
+
+        scm {
+            url 'https://github.com/mokka88/commons'
+            connection 'scm:https://github.com/mokka88/commons.git'
+            developerConnection 'scm:git://github.com/mokka88/commons.git'
+        }
+
+        licenses {
+            license {
+                name 'MIT License'
+                url 'https://www.mit.edu/~amini/LICENSE.md'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'mokka88'
+                name 'Gábor Motkó'
+                email 'mokka88@gmail.com'
+            }
+        }
+    }
+}
 
 repositories {
     // Use jcenter for resolving dependencies.
@@ -46,25 +89,12 @@ test {
     useJUnitPlatform()
 }
 
-publishing {
-  publications {
-        maven(MavenPublication) {
-            groupId = 'io.github.mokka88'
-            artifactId = 'commons'
-            version = '1.0.2'
+nexus {
+    sign = true
+    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+}
 
-            from components.java
-        }
-    }
-
-  repositories {
-    maven {
-      name = "OSSRH"
-      url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-      credentials {
-        username = System.getenv("MAVEN_USERNAME")
-        password = System.getenv("MAVEN_PASSWORD")
-      }
-    }
-  }
+nexusStaging {
+    packageGroup = "io.github.mokka88" //optional if packageGroup == project.getGroup()
 }
